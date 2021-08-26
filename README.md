@@ -52,6 +52,7 @@ hour int
 # ETL Process
 1. Search all the files in data/song_data directory and upload the songs data and artists data
 2. Search all the json files in data/log_data directory and upload the data in the following order:
+
     2.1. Filter on "Next Song" only
     2.2. Insert into time table
     2.3. Insert into user table
