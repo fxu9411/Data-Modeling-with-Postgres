@@ -8,5 +8,57 @@ They'd like a data engineer to create a Postgres database with tables designed t
 2. Load the songs data and logs data into the database through the ETL pipeline
 
 # Database Design
-## Database Schema
-1. 
+1. Fact Table: songplays
+songplay_id SERIAL PRIMARY KEY,
+start_time TIMESTAMP,
+user_id varchar,
+level varchar,
+song_id varchar,
+artist_id varchar,
+session_id varchar,
+localtion varchar,
+user_agent varchar
+
+2. Dimension Table: users
+user_id varchar PRIMARY KEY,
+first_name varchar,
+last_name varchar,
+gender varchar,
+level varchar
+
+3. Dimension Table: songs
+song_id varchar PRIMARY KEY,
+title varchar,
+artist_id varchar,
+year int,
+duration float
+
+4. Dimension Table: artists
+artist_id varchar PRIMARY KEY,
+name varchar,
+location varchar,
+latitude float,
+longitude float
+
+5. Dimension Table: time
+start_time timestamp,
+year int,
+month int,
+week int,
+day int,
+weekday int,
+hour int
+
+# ETL Process
+1. Search all the files in data/song_data directory and upload the songs data and artists data
+2. Search all the json files in data/log_data directory and upload the data in the following order:
+    2.1. Filter on "Next Song" only
+    2.2. Insert into time table
+    2.3. Insert into user table
+    2.4. Insert into songplay table
+
+# How to run the project
+```bash
+python create_tables.py
+python etl.py
+```
