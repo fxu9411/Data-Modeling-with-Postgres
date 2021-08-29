@@ -10,8 +10,7 @@ time_table_drop = "DROP TABLE IF EXISTS time"
 
 songplay_table_create = ("""
 CREATE TABLE IF NOT EXISTS songplays 
-(songplay_id SERIAL PRIMARY KEY,
-start_time TIMESTAMP,
+(start_time TIMESTAMP PRIMARY KEY,
 user_id int NOT NULL,
 level varchar,
 song_id varchar,
@@ -50,8 +49,7 @@ longitude float)
 
 time_table_create = ("""
 CREATE TABLE IF NOT EXISTS time
-(time_id SERIAL PRIMARY KEY,
-start_time timestamp NOT NULL,
+(start_time timestamp PRIMARY KEY,
 year int,
 month int,
 week int,
@@ -65,33 +63,37 @@ hour int)
 songplay_table_insert = ("""
 INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, localtion, user_agent)
 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+ON CONFLICT (start_time)
+DO NOTHING;
 """)
 
 user_table_insert = ("""
 INSERT INTO users (user_id, first_name, last_name, gender, level)
 VALUES (%s, %s, %s, %s, %s)
 ON CONFLICT (user_id)
-DO UPDATE SET level = EXCLUDED.level
+DO UPDATE SET level = EXCLUDED.level;
 """)
 
 song_table_insert = ("""
 INSERT INTO songs (song_id, title, artist_id, year, duration)
 VALUES (%s, %s, %s, %s, %s)
-ON CONFLICT DO NOTHING
+ON CONFLICT (song_id)
+DO NOTHING;
 """)
 
 artist_table_insert = ("""
 INSERT INTO artists (artist_id, name, location, latitude, longitude)
 VALUES (%s, %s, %s, %s, %s)
 ON CONFLICT (artist_id)
-DO UPDATE SET name = EXCLUDED.name, location = EXCLUDED.location, 
-              latitude = EXCLUDED.latitude, longitude = EXCLUDED.longitude
+DO NOTHING;
 """)
 
 
 time_table_insert = ("""
 INSERT INTO time (start_time, year, month, week, day, weekday, hour)
 VALUES (%s, %s, %s, %s, %s, %s, %s)
+ON CONFLICT (start_time)
+DO NOTHING;
 """)
 
 # FIND SONGS
@@ -100,7 +102,7 @@ VALUES (%s, %s, %s, %s, %s, %s, %s)
 song_select = ("""
 SELECT a.song_id, a.artist_id FROM songs a
 JOIN artists b ON a.artist_id = b.artist_id
-WHERE a.title = ''%s'' AND b.name = ''%s'' AND a.duration = %s
+WHERE a.title = %s AND b.name = %s AND a.duration = %s
 """)
 
 # QUERY LISTS
