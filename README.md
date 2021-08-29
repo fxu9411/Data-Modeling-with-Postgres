@@ -8,7 +8,9 @@ They'd like a data engineer to create a Postgres database with tables designed t
 2. Load the songs data and logs data into the database through the ETL pipeline
 
 # Data File Walkthrough
-
+In the "data" directory, the entire dataset is split into two parts:
+1. log_data: data files in the log_data contain the detail of the songplays from each users, including the name of artist, first/last name of the user, gender, the time consumed on the app, level of membership, location, what song they listen to and the user agent(the browser information).  
+2. song_data: data files in song_data contain the song and artist related information, including artist ID, location of the artist, title of the song, duration and the published year.
 
 # Database Design
 1. Fact Table: songplays
