@@ -7,6 +7,9 @@ They'd like a data engineer to create a Postgres database with tables designed t
 1. Define fact and dimension tables for a star schema for a particular analytic focus
 2. Load the songs data and logs data into the database through the ETL pipeline
 
+# Data File Walkthrough
+
+
 # Database Design
 1. Fact Table: songplays
 songplay_id SERIAL PRIMARY KEY,
